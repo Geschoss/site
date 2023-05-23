@@ -1,3 +1,9 @@
+'use strict';
+module.exports = {
+ promisify,
+ stringify,
+};
+
 function promisify(fn) {
  return new Promise((res, rej) => {
   try {
@@ -11,7 +17,3 @@ function promisify(fn) {
 function stringify(msg) {
  return promisify(() => JSON.stringify(msg));
 }
-module.exports = {
- promisify,
- stringify,
-};

@@ -1,6 +1,12 @@
-export function last(arr) {
+'use strict';
+module.exports = {
+ last,
+ first,
+};
+
+function last(arr) {
  return arr[arr.length - 1];
 }
-export function first(arr) {
-  return arr[0];
+function first(arr) {
+ return arr[0];
 }
