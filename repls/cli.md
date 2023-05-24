@@ -7,5 +7,5 @@ scp WebGL.zip root@77.232.135.50:/root/test
 ## nginx
 sudo nginx -s reload
 
-## Архиф
-tar -xvf <file>
+## Запусе
+pm2 start index.js
