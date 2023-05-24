@@ -1,7 +1,7 @@
 const wasmLoader = 'wasm';
-var canvas = document.querySelector("#unity-canvas");
-canvas.style.width = "960px";
-canvas.style.height = "600px";
+var canvas = document.querySelector('#unity-canvas');
+canvas.style.width = '960px';
+canvas.style.height = '600px';
 
 fetchGameLoader(wasmLoader);
 function fetchGameLoader(loaderName) {
@@ -10,10 +10,10 @@ function fetchGameLoader(loaderName) {
     script.src = path;
     script.onload = () => {
         var buildUrl = `/games/${loaderName}/cherry_guy_4000`;
-        const config = {
-            dataUrl: buildUrl + '/WebGL.data.br',
-            frameworkUrl: buildUrl + '/WebGL.framework.js.br',
-            codeUrl: buildUrl + '/WebGL.wasm.br',
+        var config = {
+            dataUrl: buildUrl + '/WebGL.data',
+            frameworkUrl: buildUrl + '/WebGL.framework.js',
+            codeUrl: buildUrl + '/WebGL.wasm',
             streamingAssetsUrl: 'StreamingAssets',
             companyName: 'DefaultCompany',
             productName: '2D',

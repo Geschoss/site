@@ -24,14 +24,14 @@ function makeRoute({ logger, env }) {
                         isLoader,
                     };
                 }
-                file_path = `${env.paths.games}/${gameType}/${gameName}/Build/${fileName}`;
+                file_path = `${env.paths.games}/${gameType}/${gameName}/${fileName}`;
                 const data = await fs.promises.readFile(file_path);
                 return {
                     code: 200,
                     data,
                     isLoader,
                     headers: {
-                        'Content-Encoding': 'br',
+                        'Content-Type': 'application/wasm',
                     },
                 };
             },
