@@ -60,6 +60,24 @@ h3 {
 }
 
 #unity-container.unity-desktop {
+    position: relative;
     display: flex;
     justify-content: center;
+}
+
+#unity-progress-bar-empty {
+    display: none;
+    position: absolute;
+    top: 100px;
+    height: 20px;
+    width: 200px;
+    border: 2px solid black;
+}
+
+#unity-progress-bar-full {
+    display: none;
+    top: 100px;
+    height: 20px;
+    width: 0;
+    background-color: red;
 }
