@@ -6,6 +6,7 @@ const paths = {
     logs: `${process.env.PWD}/logs/`,
     games: `${process.env.PWD}/src/games`,
     static: `${process.env.PWD}/src/static`,
+    security: `${process.env.PWD}/src/security`,
 };
 
 let logger = create_logger({
