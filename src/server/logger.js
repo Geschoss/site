@@ -11,32 +11,43 @@ function create_logger({ path }) {
     process.stdout.pipe(access_log_file);
     process.stderr.pipe(error_log_file);
 
-    async function prepare_msg(...a) {
-        const msg = { ts: new Date().toISOString(), msg: util.format(...a) };
+    let context = {};
+
+    async function prepare_msg(v) {
+        const msg = { ts: new Date().toISOString(), ...context, ...v };
         return stringify(msg);
     }
 
-    async function error(...a) {
+    async function error(v) {
         try {
-            let msg = await prepare_msg(...a);
+            let msg = await prepare_msg({ ...context, error: v });
             error_log_file.write(msg + '\n');
         } catch (err) {
             process.stderr.write(`${err}`);
         }
     }
 
-    async function log(...a) {
+    async function log(v) {
         try {
-            let msg = await prepare_msg(...a);
+            let msg = await prepare_msg(v);
             access_log_file.write(msg + '\n');
         } catch (err) {
             error(err);
         }
     }
 
+    function addContext(c) {
+        context = c;
+    }
+    function dropContext() {
+        context = {};
+    }
     return {
         log,
         error,
+
+        addContext,
+        dropContext,
     };
 }
 

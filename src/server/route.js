@@ -1,6 +1,7 @@
 let fs = require('fs');
-let path = require('path');
 let { last } = require('../utils/array.js');
+let { makeStatic } = require('./routes/static.js');
+let { makeGame } = require('./routes/game.js');
 
 module.exports = {
     makeRoute,
@@ -9,46 +10,31 @@ module.exports = {
 function makeRoute({ logger, env }) {
     return {
         routes: {
+            game: makeGame({ env, logger }),
+            static: makeStatic({ env }),
             api: async () => {
                 return {};
-            },
-            game: async ({ file }) => {
-                const { gameType, gameName, isLoader, fileName } = file;
-                let file_path;
-                if (isLoader) {
-                    file_path = `${env.paths.games}/${gameType}/loader.js`;
-                    const data = await fs.promises.readFile(file_path);
-                    return {
-                        code: 200,
-                        data,
-                        isLoader,
-                    };
-                }
-                file_path = `${env.paths.games}/${gameType}/${gameName}/${fileName}`;
-                const data = await fs.promises.readFile(file_path);
-                return {
-                    code: 200,
-                    data,
-                    isLoader,
-                    headers: {
-                        'Content-Type': 'application/wasm',
-                    },
-                };
-            },
-            static: async ({ file }) => {
-                const path = `${env.paths.static}/${file.name}`;
-                const data = await fs.promises.readFile(path);
-                return {
-                    code: 200,
-                    data,
-                };
             },
             unknown: () => {
                 return {};
             },
         },
-        makeFile,
+        whatType,
     };
+}
+
+function whatType(url) {
+    const [type] = url.substring(1).split('/');
+    if (type === '' || type === 'static') {
+        return 'static';
+    }
+    if (type === 'games') {
+        return 'game';
+    }
+    if (type === 'api') {
+        return 'api';
+    }
+    return 'unknown';
 }
 
 function makeFile(url) {
